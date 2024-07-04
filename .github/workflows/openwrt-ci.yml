@@ -293,6 +293,7 @@ jobs:
           CONFIG_PACKAGE_https-dns-proxy=y
           CONFIG_PACKAGE_luci-app-https-dns-proxy=y
           CONFIG_PACKAGE_luci-i18n-https-dns-proxy-https-dns-proxy.pot=y
+          CONFIG_PACKAGE_luci-app-uhttpd=y
 
           CONFIG_ALL_NONSHARED=n
           CONFIG_ALL_KMODS=n
