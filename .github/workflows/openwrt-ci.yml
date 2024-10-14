@@ -65,7 +65,7 @@ jobs:
         echo "==============================================================================" 
     
     - name: Checkout OpenWrt
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
           
     - name: 第三方插件
       run: | 
