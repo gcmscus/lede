@@ -73,7 +73,10 @@ jobs:
           rm -rf luci-theme-argon
           git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
           git clone -b 18.06 https://github.com/jerrykuku/luci-app-argon-config.git
-          git clone https://github.com/fw876/helloworld.git
+          #git clone https://github.com/fw876/helloworld.git
+          git clone https://github.com/xiaorouji/openwrt-passwall-packages.git
+          #git clone https://github.com/xiaorouji/openwrt-passwall.git
+          git clone https://github.com/xiaorouji/openwrt-passwall2.git
           
 #    - name: OpenClash
 #      run: |
@@ -88,7 +91,7 @@ jobs:
           
     - name: Update feeds
       run: |
-          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+          #sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
@@ -294,6 +297,24 @@ jobs:
           CONFIG_PACKAGE_luci-app-https-dns-proxy=y
           CONFIG_PACKAGE_luci-i18n-https-dns-proxy-https-dns-proxy.pot=y
           # CONFIG_PACKAGE_luci-app-uhttpd is not set
+
+          CONFIG_PACKAGE_luci-app-passwall2=y
+          CONFIG_PACKAGE_luci-app-passwall2_Iptables_Transparent_Proxy=y
+          CONFIG_PACKAGE_luci-app-passwall2_Nftables_Transparent_Proxy=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Haproxy=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Hysteria=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_IPv6_Nat=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_NaiveProxy=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Libev_Client=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Libev_Server=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Rust_Client=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Rust_Server=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_ShadowsocksR_Libev_Client=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_ShadowsocksR_Libev_Server=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Simple_Obfs=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_SingBox=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_tuic_client=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_V2ray_Plugin=y
 
           CONFIG_ALL_NONSHARED=n
           CONFIG_ALL_KMODS=n
