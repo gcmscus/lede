@@ -194,8 +194,8 @@ jobs:
           CONFIG_PACKAGE_luci-app-mwan3=y
           # CONFIG_PACKAGE_luci-app-nlbwmon is not set
           # CONFIG_PACKAGE_luci-app-samba is not set
-          CONFIG_PACKAGE_luci-app-serverchan=y
-          CONFIG_PACKAGE_luci-app-softethervpn=y
+          # CONFIG_PACKAGE_luci-app-serverchan is not set
+          CONFIG_PACKAGE_luci-app-softether=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
           CONFIG_PACKAGE_luci-app-ttyd=y
           # CONFIG_PACKAGE_luci-app-unblockmusic is not set
