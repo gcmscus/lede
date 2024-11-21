@@ -180,6 +180,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y
           CONFIG_PACKAGE_luci-app-passwall_Iptables_Transparent_Proxy=y
           # CONFIG_PACKAGE_luci-app-samba4 is not set
+          CONFIG_PACKAGE_luci-app-socat=y
           CONFIG_PACKAGE_luci-app-softether=y
           CONFIG_PACKAGE_luci-app-ttyd=y
           # CONFIG_PACKAGE_luci-app-vsftpd is not set
@@ -191,6 +192,7 @@ jobs:
           # CONFIG_PACKAGE_luci-i18n-openvpn-server-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-socat-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
           CONFIG_PACKAGE_luci-theme-argon=y
@@ -215,6 +217,7 @@ jobs:
           CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
           CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
           CONFIG_PACKAGE_sing-box=y
+          CONFIG_PACKAGE_socat=y
           # CONFIG_PACKAGE_softethervpn5-client is not set
           CONFIG_PACKAGE_softethervpn5-libs=y
           # CONFIG_PACKAGE_softethervpn5-bridge is not set
