@@ -8,11 +8,13 @@
 name: OpenWrt-CI
 
 on:
-  schedule:
-    - cron: 0 20 * * *
-
-permissions:
-  contents: read
+  #schedule:
+  #  - cron: 0 20 * * *
+  release:
+    types: [published]
+  push:
+    branches:
+      - master
 
 jobs:
 
@@ -23,38 +25,229 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Space cleanup and Initialization environment
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
-          sudo -E apt-mark hold grub-efi-amd64-signed
-          sudo -E apt update
-          sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap*
-          sudo -E apt -y full-upgrade
-          sudo -E apt -y install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
-          sudo -E systemctl daemon-reload
-          sudo -E apt -y autoremove --purge
-          sudo -E apt clean
-          sudo -E timedatectl set-timezone "Asia/Shanghai"
+    - name: "Optimize Disk Space"
+      uses: "hugoalh/disk-space-optimizer-ghaction@v0.8.0"
+      with:
+        operate_sudo: "True"
+        general_include: ".+"
+        general_exclude: |-
+          ^GCC$
+          ^G\+\+$
+          Clang
+          LLVM
+        docker_include: ".+"
+        docker_prune: "True"
+        docker_clean: "True"
+        apt_prune: "True"
+        apt_clean: "True"
+        homebrew_prune: "True"
+        homebrew_clean: "True"
+        npm_prune: "True"
+        npm_clean: "True"
+        os_swap: "True"
 
-      - name: Checkout OpenWrt
-        uses: actions/checkout@v3
+    - name: Freeing up disk space
+      uses: easimon/maximize-build-space@master
+      with: 
+        root-reserve-mb: 2048
+        swap-size-mb: 1
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
 
-      - name: Update feeds
-        run: |
+    - name: Free up disk space complete
+      run: |
+        echo "Free up disk space complete"
+        echo "=============================================================================="
+        df -hT
+        echo "==============================================================================" 
+    
+    - name: Checkout OpenWrt
+      uses: actions/checkout@v4
+          
+    - name: Other plugins
+      run: | 
+          cd package/lean
+          rm -rf luci-theme-argon
+          git clone https://github.com/jerrykuku/luci-theme-argon.git
+          git clone https://github.com/jerrykuku/luci-app-argon-config.git
+          git clone https://github.com/fw876/helloworld.git
+          git clone https://github.com/tty228/luci-app-wechatpush.git
+                  
+    - name: Update feeds
+      run: |
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Generate configuration file
-        run: make defconfig
+    - name: Generate configuration file
+      run: |
+          rm -f ./.config*
+          touch ./.config
+          cat >> .config <<EOF
+          CONFIG_TARGET_x86=y
+          CONFIG_TARGET_x86_64=y
+          CONFIG_TARGET_x86_64_DEVICE_generic=y
+          CONFIG_OPENVPN_openssl_ENABLE_DEF_AUTH=y
+          CONFIG_OPENVPN_openssl_ENABLE_FRAGMENT=y
+          CONFIG_OPENVPN_openssl_ENABLE_LZ4=y
+          CONFIG_OPENVPN_openssl_ENABLE_LZO=y
+          CONFIG_OPENVPN_openssl_ENABLE_MULTIHOME=y
+          CONFIG_OPENVPN_openssl_ENABLE_PF=y
+          CONFIG_OPENVPN_openssl_ENABLE_PORT_SHARE=y
+          CONFIG_OPENVPN_openssl_ENABLE_SMALL=y
+          CONFIG_PACKAGE_6in4=y
+          # CONFIG_PACKAGE_attr is not set
+          # CONFIG_PACKAGE_automount is not set
+          # CONFIG_PACKAGE_autosamba is not set
+          # CONFIG_PACKAGE_avahi-dbus-daemon is not set
+          CONFIG_PACKAGE_bash=y
+          CONFIG_PACKAGE_chinadns-ng=y
+          CONFIG_PACKAGE_coreutils-nohup=y
+          # CONFIG_PACKAGE_dbus is not set
+          # CONFIG_PACKAGE_etherwake is not set
+          # CONFIG_PACKAGE_filebrowser=y
+          CONFIG_PACKAGE_haproxy=y
+          CONFIG_PACKAGE_ip6tables=y
+          CONFIG_PACKAGE_ipt2socks=y
+          CONFIG_PACKAGE_iputils-arping=y
+          CONFIG_PACKAGE_ipv6helper=y
+          CONFIG_PACKAGE_jq=y
+          # CONFIG_PACKAGE_kmod-fs-exfat is not set
+          # CONFIG_PACKAGE_kmod-fs-ext4 is not set
+          # CONFIG_PACKAGE_kmod-fs-ntfs3 is not set
+          CONFIG_PACKAGE_kmod-inet-diag=y
+          CONFIG_PACKAGE_kmod-ip6tables=y
+          CONFIG_PACKAGE_kmod-ipt-nat6=y
+          CONFIG_PACKAGE_kmod-iptunnel=y
+          CONFIG_PACKAGE_kmod-iptunnel4=y
+          # CONFIG_PACKAGE_kmod-lib-crc16 is not set
+          CONFIG_PACKAGE_kmod-netlink-diag=y
+          CONFIG_PACKAGE_kmod-nf-ipt6=y
+          CONFIG_PACKAGE_kmod-nf-log6=y
+          CONFIG_PACKAGE_kmod-nf-nat6=y
+          CONFIG_PACKAGE_kmod-nf-reject6=y
+          # CONFIG_PACKAGE_kmod-scsi-core is not set
+          CONFIG_PACKAGE_kmod-sit=y
+          # CONFIG_PACKAGE_kmod-usb-storage is not set
+          # CONFIG_PACKAGE_kmod-usb-storage-extras is not set
+          # CONFIG_PACKAGE_kmod-usb-storage-uas is not set
+          # CONFIG_PACKAGE_libattr is not set
+          # CONFIG_PACKAGE_libavahi-client is not set
+          # CONFIG_PACKAGE_libavahi-dbus-support is not set
+          CONFIG_PACKAGE_libcap-bin=y
+          CONFIG_PACKAGE_libcap-bin-capsh-shell="/bin/sh"
+          # CONFIG_PACKAGE_libdaemon is not set
+          # CONFIG_PACKAGE_libdbus is not set
+          # CONFIG_PACKAGE_libexpat is not set
+          # CONFIG_PACKAGE_libgnutls is not set
+          CONFIG_PACKAGE_libltdl=y
+          CONFIG_PACKAGE_liblua5.3=y
+          CONFIG_PACKAGE_liblzo=y
+          # CONFIG_PACKAGE_libnettle is not set
+          # CONFIG_PACKAGE_libpopt is not set
+          CONFIG_PACKAGE_libruby=y
+          # CONFIG_PACKAGE_libtasn1 is not set
+          # CONFIG_PACKAGE_libtirpc is not set
+          # CONFIG_PACKAGE_liburing is not set
+          CONFIG_PACKAGE_libuv=y
+          CONFIG_PACKAGE_libwebsockets-full=y
+          CONFIG_PACKAGE_libyaml=y
+          # CONFIG_PACKAGE_luci-app-accesscontrol is not set
+          CONFIG_PACKAGE_luci-app-argon-config=y
+          CONFIG_PACKAGE_luci-app-fileassistant=y
+          # CONFIG_PACKAGE_luci-app-filebrowser=y
+          CONFIG_PACKAGE_luci-app-openclash=y
+          # CONFIG_PACKAGE_luci-app-openvpn-server is not set
+          CONFIG_PACKAGE_luci-app-passwall=y
+          CONFIG_PACKAGE_luci-app-passwall2=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Haproxy=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_ShadowsocksR_Libev_Client=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Libev_Client=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Simple_Obfs=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_SingBox=y
+          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_V2ray_Plugin=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Simple_Obfs=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_SingBox=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Plus=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Plugin=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y
+          CONFIG_PACKAGE_luci-app-passwall_Iptables_Transparent_Proxy=y
+          # CONFIG_PACKAGE_luci-app-samba4 is not set
+          CONFIG_PACKAGE_luci-app-socat=y
+          CONFIG_PACKAGE_luci-app-softether=y
+          CONFIG_PACKAGE_luci-app-ttyd=y
+          # CONFIG_PACKAGE_luci-app-vsftpd is not set
+          # CONFIG_PACKAGE_luci-i18n-vsftpd-zh-cn is not set          
+          CONFIG_PACKAGE_luci-app-wechatpush=y
+          # CONFIG_PACKAGE_luci-app-wol is not set
+          CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
+          # CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
+          # CONFIG_PACKAGE_luci-i18n-openvpn-server-zh-cn is not set
+          CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-socat-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
+          CONFIG_PACKAGE_luci-theme-argon=y
+          # CONFIG_PACKAGE_luci-theme-material=y
+          # CONFIG_PACKAGE_luci-theme-openwrt=y
+          # CONFIG_PACKAGE_luci-theme-openwrt-2020=y
+          CONFIG_PACKAGE_openvpn-easy-rsa=y
+          CONFIG_PACKAGE_openvpn-openssl=y
+          CONFIG_PACKAGE_ruby=y
+          CONFIG_PACKAGE_ruby-bigdecimal=y
+          CONFIG_PACKAGE_ruby-date=y
+          CONFIG_PACKAGE_ruby-digest=y
+          CONFIG_PACKAGE_ruby-enc=y
+          CONFIG_PACKAGE_ruby-forwardable=y
+          CONFIG_PACKAGE_ruby-pstore=y
+          CONFIG_PACKAGE_ruby-psych=y
+          CONFIG_PACKAGE_ruby-stringio=y
+          CONFIG_PACKAGE_ruby-strscan=y
+          CONFIG_PACKAGE_ruby-yaml=y
+          # CONFIG_PACKAGE_samba4-libs is not set
+          # CONFIG_PACKAGE_samba4-server is not set
+          CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
+          CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
+          CONFIG_PACKAGE_sing-box=y
+          CONFIG_PACKAGE_socat=y
+          # CONFIG_PACKAGE_softethervpn5-client is not set
+          CONFIG_PACKAGE_softethervpn5-libs=y
+          # CONFIG_PACKAGE_softethervpn5-bridge is not set
+          CONFIG_PACKAGE_softethervpn5-server=y
+          CONFIG_PACKAGE_ttyd=y
+          CONFIG_PACKAGE_unzip=y
+          CONFIG_PACKAGE_v2ray-geoip=y
+          CONFIG_PACKAGE_v2ray-geosite=y
+          CONFIG_PACKAGE_v2ray-plugin=y
+          # CONFIG_PACKAGE_wsdd2 is not set
+          CONFIG_SING_BOX_WITH_CLASH_API=y
+          CONFIG_SING_BOX_WITH_DHCP=y
+          CONFIG_SING_BOX_WITH_ECH=y
+          CONFIG_SING_BOX_WITH_GVISOR=y
+          CONFIG_SING_BOX_WITH_QUIC=y
+          CONFIG_SING_BOX_WITH_UTLS=y
+          CONFIG_SING_BOX_WITH_WIREGUARD=y
+          CONFIG_TARGET_ROOTFS_PARTSIZE=600
 
-      - name: Download packages
-        run: make download -j16
+          EOF
+          sed -i 's/^[ \\t]*//g' ./.config
+          make defconfig
 
-      - name: Compile firmware
-        run: |
+    - name: Make download
+      run: |
+          make download -j8
+          find dl -size -1024c -exec rm -f {} \;
+
+    - name: Compile firmware
+      run: |
           make -j$(nproc) || make -j1 V=s
           echo "======================="
           echo "Space usage:"
@@ -65,28 +258,30 @@ jobs:
           du -h --max-depth=1 ./build_dir
           du -h --max-depth=1 ./bin
 
-      - name: Prepare artifact
-        run: |
+    - name: Prepare artifact
+      run: |
+          mkdir -p ./artifact/firmware
           mkdir -p ./artifact/package
           mkdir -p ./artifact/buildinfo
           rm -rf $(find ./bin/targets/ -type d -name "packages")
+          cp -rf $(find ./bin/targets/ -type f) ./artifact/firmware/
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
-      - name: Upload buildinfo
-        uses: actions/upload-artifact@v3
-        with:
+    - name: Upload buildinfo
+      uses: actions/upload-artifact@v4
+      with:
           name: OpenWrt_buildinfo
           path: ./artifact/buildinfo/
 
-      - name: Upload package
-        uses: actions/upload-artifact@v3
-        with:
+    - name: Upload package
+      uses: actions/upload-artifact@v4
+      with:
           name: OpenWrt_package
           path: ./artifact/package/
 
-      - name: Upload firmware
-        uses: actions/upload-artifact@v3
-        with:
+    - name: Upload firmware
+      uses: actions/upload-artifact@v4
+      with:
           name: OpenWrt_firmware
           path: ./bin/targets/
