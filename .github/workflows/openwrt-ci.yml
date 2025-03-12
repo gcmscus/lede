@@ -75,8 +75,7 @@ jobs:
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
           git clone https://github.com/fw876/helloworld.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
-          git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
-          git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+          git clone https://github.com/immortalwrt/homeproxy.git
                   
     - name: Update feeds
       run: |
@@ -109,6 +108,7 @@ jobs:
           CONFIG_PACKAGE_chinadns-ng=y
           CONFIG_PACKAGE_coreutils-nohup=y
           # CONFIG_PACKAGE_dbus is not set
+          CONFIG_PACKAGE_ddns-go=y
           # CONFIG_PACKAGE_etherwake is not set
           # CONFIG_PACKAGE_filebrowser=y
           CONFIG_PACKAGE_haproxy=y
@@ -159,8 +159,10 @@ jobs:
           CONFIG_PACKAGE_libyaml=y
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set
           CONFIG_PACKAGE_luci-app-argon-config=y
+          CONFIG_PACKAGE_luci-app-ddns-go=y
           CONFIG_PACKAGE_luci-app-fileassistant=y
           # CONFIG_PACKAGE_luci-app-filebrowser=y
+          CONFIG_PACKAGE_luci-app-mosdns=y
           CONFIG_PACKAGE_luci-app-openclash=y
           # CONFIG_PACKAGE_luci-app-openvpn-server is not set
           CONFIG_PACKAGE_luci-app-passwall=y
@@ -189,8 +191,12 @@ jobs:
           # CONFIG_PACKAGE_luci-i18n-vsftpd-zh-cn is not set          
           CONFIG_PACKAGE_luci-app-wechatpush=y
           # CONFIG_PACKAGE_luci-app-wol is not set
+          CONFIG_PACKAGE_luci-app-homeproxy=y
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-openvpn-server-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
@@ -198,7 +204,6 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
           CONFIG_PACKAGE_luci-theme-argon=y
-          CONFIG_PACKAGE_luci-app-mosdns=y
           # CONFIG_PACKAGE_luci-theme-material=y
           # CONFIG_PACKAGE_luci-theme-openwrt=y
           # CONFIG_PACKAGE_luci-theme-openwrt-2020=y
