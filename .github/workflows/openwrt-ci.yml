@@ -75,7 +75,7 @@ jobs:
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
           git clone https://github.com/fw876/helloworld.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
-          git clone https://github.com/immortalwrt/homeproxy.git
+          # git clone https://github.com/immortalwrt/homeproxy.git
                   
     - name: Update feeds
       run: |
@@ -162,7 +162,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-ddns-go=y
           CONFIG_PACKAGE_luci-app-fileassistant=y
           # CONFIG_PACKAGE_luci-app-filebrowser=y
-          CONFIG_PACKAGE_luci-app-mosdns=y
+          # CONFIG_PACKAGE_luci-app-mosdns=y
           CONFIG_PACKAGE_luci-app-openclash=y
           # CONFIG_PACKAGE_luci-app-openvpn-server is not set
           CONFIG_PACKAGE_luci-app-passwall=y
@@ -191,12 +191,12 @@ jobs:
           # CONFIG_PACKAGE_luci-i18n-vsftpd-zh-cn is not set          
           CONFIG_PACKAGE_luci-app-wechatpush=y
           # CONFIG_PACKAGE_luci-app-wol is not set
-          CONFIG_PACKAGE_luci-app-homeproxy=y
+          # CONFIG_PACKAGE_luci-app-homeproxy=y
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
+          # CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y
+          # CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-openvpn-server-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
