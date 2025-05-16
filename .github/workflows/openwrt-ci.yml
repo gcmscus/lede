@@ -150,6 +150,7 @@ jobs:
           CONFIG_PACKAGE_libstdcpp=y
           CONFIG_PACKAGE_libyaml=y
           CONFIG_PACKAGE_lsblk=y
+          # CONFIG_PACKAGE_vsftpd-alt is not set
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set
           CONFIG_PACKAGE_luci-app-argon-config=y
           # CONFIG_PACKAGE_luci-app-arpbind is not set
@@ -190,6 +191,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Hysteria=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_IPT2Socks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
+          # CONFIG_PACKAGE_luci-app-vsftpd is not set
           CONFIG_PACKAGE_luci-app-wechatpush=y
           # CONFIG_PACKAGE_luci-app-wol is not set
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
@@ -198,6 +200,7 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-softethervpn-zh-cn=y
+          # CONFIG_PACKAGE_luci-i18n-vsftpd-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
           CONFIG_PACKAGE_luci-theme-argon=y
           # CONFIG_PACKAGE_nlbwmon is not set
