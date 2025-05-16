@@ -69,6 +69,7 @@ jobs:
           
     - name: Other plugins
       run: | 
+          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           cd package/lean
           git clone https://github.com/jerrykuku/luci-theme-argon.git
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
@@ -76,7 +77,6 @@ jobs:
    
     - name: Update feeds
       run: |
-          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
