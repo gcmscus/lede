@@ -99,7 +99,7 @@ jobs:
           CONFIG_PACKAGE_boost-system=y
           CONFIG_PACKAGE_chinadns-ng=y
           CONFIG_PACKAGE_coreutils-nohup=y
-          CONFIG_PACKAGE_ddns-go=y
+          # CONFIG_PACKAGE_ddns-go is not set
           # CONFIG_PACKAGE_etherwake is not set
           CONFIG_PACKAGE_geoview=y
           CONFIG_PACKAGE_haproxy=y
@@ -155,7 +155,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-argon-config=y
           # CONFIG_PACKAGE_luci-app-arpbind is not set
           CONFIG_PACKAGE_luci-app-ddns=y
-          CONFIG_PACKAGE_luci-app-ddns-go=y
+          # CONFIG_PACKAGE_luci-app-ddns-go is not set
           CONFIG_PACKAGE_luci-app-fileassistant=y
           # CONFIG_PACKAGE_luci-app-ksmbd is not set
           CONFIG_PACKAGE_luci-app-mosdns=y
@@ -195,7 +195,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-wechatpush=y
           # CONFIG_PACKAGE_luci-app-wol is not set
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
+          # CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
