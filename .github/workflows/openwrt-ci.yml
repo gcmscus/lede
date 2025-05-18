@@ -70,7 +70,6 @@ jobs:
     - name: Other plugins
       run: | 
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
-          rm -rf package/lean/ddns-scripts_aliyun package/lean/ddns-scripts_dnspod
           git clone https://github.com/sirpdboy/luci-app-ddns-go.git
           git clone https://github.com/jerrykuku/luci-theme-argon.git
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
