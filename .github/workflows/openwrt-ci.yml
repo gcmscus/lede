@@ -22,7 +22,7 @@ jobs:
 
     name: Build OpenWrt Firmware
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Space cleanup and Initialization environment
@@ -61,12 +61,12 @@ jobs:
       - name: Other plugins
         run: | 
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
-          echo 'src-git ddns-go https://github.com/sirpdboy/luci-app-ddns-go.git' >>feeds.conf.default
           cd package/lean
           rm -rf luci-theme-argon
-          git clone https://github.com/jerrykuku/luci-theme-argon.git
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
+          git clone https://github.com/sirpdboy/luci-app-ddns-go.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
+          git clone https://github.com/jerrykuku/luci-theme-argon.git
 
       - name: Update feeds
         run: |
