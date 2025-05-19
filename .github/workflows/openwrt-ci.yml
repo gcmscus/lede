@@ -64,7 +64,6 @@ jobs:
           sed -i '$a src-git luci-theme-argon https://github.com/jerrykuku/luci-app-argon-config.git' ./feeds.conf.default
           sed -i '$a src-git luci-app-argon-config https://github.com/jerrykuku/luci-theme-argon.git' ./feeds.conf.default
           sed -i '$a src-git luci-app-wechatpush https://github.com/tty228/luci-app-wechatpush.git' ./feeds.conf.default
-          sed -i '$a src-git luci-app-ddns-go https://github.com/sirpdboy/luci-app-ddns-go.git' ./feeds.config.default
           sed -i '$a src-git ddns-go https://github.com/sirpdboy/luci-app-ddns-go.git' ./feeds.conf.default
 
       - name: Update feeds
