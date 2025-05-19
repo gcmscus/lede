@@ -61,6 +61,7 @@ jobs:
       - name: Other plugins
         run: | 
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+          cd package/lean
           git clone https://github.com/jerrykuku/luci-theme-argon.git
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
@@ -162,7 +163,6 @@ jobs:
           CONFIG_PACKAGE_luci-app-passwall_Iptables_Transparent_Proxy=y
           CONFIG_PACKAGE_luci-app-softethervpn=y
           # CONFIG_PACKAGE_luci-app-vsftpd is not set
-          CONFIG_PACKAGE_luci-app-watchcat=y
           CONFIG_PACKAGE_luci-app-wechatpush=y
           # CONFIG_PACKAGE_luci-app-wol is not set
           CONFIG_PACKAGE_luci-i18n-argon-CONFIG-zh-cn=y
@@ -171,7 +171,6 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-softethervpn-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-watchcat-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
           CONFIG_PACKAGE_luci-theme-argon=y
           # CONFIG_PACKAGE_nlbwmon is not set
