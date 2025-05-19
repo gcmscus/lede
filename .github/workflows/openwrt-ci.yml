@@ -61,9 +61,9 @@ jobs:
       - name: Other plugins
         run: | 
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
-          sed -i '$a src-git luci-theme-argon https://github.com/jerrykuku/luci-app-argon-config.git' ./feeds.conf.default
-          sed -i '$a src-git luci-app-argon-config https://github.com/jerrykuku/luci-theme-argon.git' ./feeds.conf.default
-          sed -i '$a src-git luci-app-wechatpush https://github.com/tty228/luci-app-wechatpush.git' ./feeds.conf.default
+          sed -i '$a src-git argon https://github.com/jerrykuku/luci-app-argon-config.git' ./feeds.conf.default
+          sed -i '$a src-git argon-config https://github.com/jerrykuku/luci-theme-argon.git' ./feeds.conf.default
+          sed -i '$a src-git lwechatpush https://github.com/tty228/luci-app-wechatpush.git' ./feeds.conf.default
           sed -i '$a src-git ddns-go https://github.com/sirpdboy/luci-app-ddns-go.git' ./feeds.conf.default
 
       - name: Update feeds
