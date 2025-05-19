@@ -64,7 +64,7 @@ jobs:
           cd package/lean
           rm -rf luci-theme-argon
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
-          git clone https://github.com/sirpdboy/luci-app-ddns-go.git
+          git clone https://github.com/jeessy2/ddns-go.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
           git clone https://github.com/jerrykuku/luci-theme-argon.git
 
@@ -135,7 +135,7 @@ jobs:
           CONFIG_PACKAGE_libruby=y
           CONFIG_PACKAGE_libyaml=y
           # CONFIG_PACKAGE_luci-app-accesscontrol is not set
-          CONFIG_PACKAGE_luci-app-argon-CONFIG=y
+          CONFIG_PACKAGE_luci-app-argon-config=y
           # CONFIG_PACKAGE_luci-app-ddns is not set
           CONFIG_PACKAGE_luci-app-ddns-go=y
           CONFIG_PACKAGE_luci-app-fileassistant=y
@@ -167,7 +167,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-vsftpd is not set
           CONFIG_PACKAGE_luci-app-wechatpush=y
           # CONFIG_PACKAGE_luci-app-wol is not set
-          CONFIG_PACKAGE_luci-i18n-argon-CONFIG-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
