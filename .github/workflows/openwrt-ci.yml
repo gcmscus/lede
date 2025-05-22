@@ -63,7 +63,7 @@ jobs:
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           cd package/lean
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
-          git clone -b v6.9.1 https://github.com/sirpdboy/luci-app-ddns-go.git
+          git clone https://github.com/sirpdboy/luci-app-ddns-go.git
           git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
           git clone https://github.com/jerrykuku/luci-theme-argon.git
