@@ -64,7 +64,6 @@ jobs:
           cd package/lean
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
           git clone https://github.com/sirpdboy/luci-app-ddns-go.git
-          git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
           git clone https://github.com/jerrykuku/luci-theme-argon.git
 
@@ -209,9 +208,6 @@ jobs:
           CONFIG_SING_BOX_WITH_UTLS=y
           CONFIG_SING_BOX_WITH_WIREGUARD=y
           CONFIG_TARGET_ROOTFS_PARTSIZE=600
-          CONFIG_PACKAGE_nikki=y
-          CONFIG_PACKAGE_luci-app-nikki=y
-          CONFIG_PACKAGE_luci-i18n-nikki-zh-cn=y
           CONFIG_PACKAGE_nikki=y
           CONFIG_PACKAGE_luci-app-nikki=y
           CONFIG_PACKAGE_luci-i18n-nikki-zh-cn=y
