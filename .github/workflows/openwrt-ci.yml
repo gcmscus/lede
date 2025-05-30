@@ -183,7 +183,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-passwall_Iptables_Transparent_Proxy=y
           CONFIG_PACKAGE_luci-app-softethervpn=y
           # CONFIG_PACKAGE_luci-app-vsftpd is not set
-          CONFIG_PACKAGE_luci-app-watchcat=y
+          # CONFIG_PACKAGE_luci-app-watchcat is not set
           CONFIG_PACKAGE_luci-app-wechatpush=y
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
@@ -193,7 +193,7 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-softethervpn-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-watchcat-zh-cn=y
+          # CONFIG_PACKAGE_luci-i18n-watchcat-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
           CONFIG_PACKAGE_luci-theme-argon=y
           CONFIG_PACKAGE_nftables-json=y
@@ -221,7 +221,7 @@ jobs:
           CONFIG_PACKAGE_v2ray-geoip=y
           CONFIG_PACKAGE_v2ray-geosite=y
           CONFIG_PACKAGE_v2ray-plugin=y
-          CONFIG_PACKAGE_watchcat=y
+          # CONFIG_PACKAGE_watchcat is not set
           # CONFIG_PACKAGE_wsdd2 is not set
           CONFIG_PACKAGE_yq=y
           CONFIG_RUBY_ENABLE_YJIT=y
