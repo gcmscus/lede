@@ -98,10 +98,6 @@ jobs:
           CONFIG_PACKAGE_firewall4=y
           CONFIG_PACKAGE_geoview=y
           CONFIG_PACKAGE_haproxy=y
-          # CONFIG_PACKAGE_i915-firmware is not set
-          # CONFIG_PACKAGE_i915-firmware-gsc is not set
-          # CONFIG_PACKAGE_i915-firmware-guc is not set
-          # CONFIG_PACKAGE_i915-firmware-huc is not set
           CONFIG_PACKAGE_ipt2socks=y
           CONFIG_PACKAGE_iptables-mod-fullconenat=m
           CONFIG_PACKAGE_iptables-mod-iprange=y
