@@ -64,7 +64,6 @@ jobs:
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           cd package/lean
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
-          # git clone https://github.com/immortalwrt/homeproxy.git
           git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
 
@@ -156,7 +155,6 @@ jobs:
           CONFIG_PACKAGE_luci-app-ddns-go=y
           CONFIG_PACKAGE_luci-app-filebrowser=y
           CONFIG_PACKAGE_luci-app-filebrowser=y
-          # CONFIG_PACKAGE_luci-app-homeproxy is not set
           # CONFIG_PACKAGE_luci-app-ksmbd is not set
           CONFIG_PACKAGE_luci-app-mosdns=y
           CONFIG_PACKAGE_luci-app-nikki=y
@@ -190,7 +188,6 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-nikki-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
