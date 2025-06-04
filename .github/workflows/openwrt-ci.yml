@@ -62,13 +62,12 @@ jobs:
       - name: Other plugins
         run: | 
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+          sed -i 's/KERNEL_PATCHVER:=.*/KERNEL_PATCHVER:=6.12/' target/linux/x86/Makefile
           cd package/lean
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
-          git clone https://github.com/sirpdboy/luci-app-ddns-go.git
           git clone https://github.com/immortalwrt/homeproxy.git
           git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
-          git clone https://github.com/jerrykuku/luci-theme-argon.git
 
       - name: Update feeds
         run: |
