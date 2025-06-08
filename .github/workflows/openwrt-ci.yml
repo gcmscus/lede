@@ -62,8 +62,6 @@ jobs:
       - name: Other plugins
         run: | 
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
-          # sed -i '/^src-git luci /s|openwrt-23.05|openwrt-24.10|' feeds.conf.default
-          # sed -i 's/KERNEL_PATCHVER:=.*/KERNEL_PATCHVER:=6.12/' target/linux/x86/Makefile
           cd package/lean
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
           git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
