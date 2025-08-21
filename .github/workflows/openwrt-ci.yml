@@ -1,80 +1,82 @@
+# 
+# <https://github.com/KFERMercer/OpenWrt-CI>
+#
+# Copyright (C) 2019 P3TERX
+#
+# Copyright (C) 2020 KFERMercer
+#
 name: OpenWrt-CI
 
 on:
+  #schedule:
+  #  - cron: 0 20 * * *
+  release:
+    types: [published]
   push:
     branches:
       - master
-  release:
-    types: [published]
   workflow_dispatch:
 
 jobs:
+
   build_openwrt:
+
     name: Build OpenWrt Firmware
+
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout Source
+      - name: Space cleanup and Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          docker rmi `docker images -q`
+          sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
+          sudo -E apt-mark hold grub-efi-amd64-signed
+          sudo -E apt update
+          sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap*
+          sudo -E apt -y full-upgrade
+          sudo -E apt -y install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache clang cmake cpio curl device-tree-compiler flex gawk gcc-multilib g++-multilib gettext genisoimage git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev libssl-dev libtool llvm lrzsz msmtp ninja-build p7zip p7zip-full patch pkgconf python3 python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+          sudo -E systemctl daemon-reload
+          sudo -E apt -y autoremove --purge
+          sudo -E apt clean
+          sudo -E timedatectl set-timezone "Asia/Shanghai"
+
+      - name: Checkout OpenWrt
         uses: actions/checkout@v4
 
-      - name: Free Disk Space
+      - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
         with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: true
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
           android: true
           dotnet: true
           haskell: true
           large-packages: true
           swap-storage: true
-
-      - name: Install Dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y build-essential clang flex bison g++ gawk \
-            gettext libncurses5-dev libssl-dev python3-distutils \
-            rsync unzip zlib1g-dev file wget git time
-
-      - name: Prepare Workspace
-        run: |
-          sudo mkdir -p /mnt/workspace
-          sudo rsync -a --delete ./ /mnt/workspace/
-
-      - name: Cache DL packages
-        uses: actions/cache@v4
-        with:
-          path: /mnt/workspace/dl
-          key: dl-${{ runner.os }}-${{ hashFiles('feeds.conf.default') }}
-          restore-keys: dl-${{ runner.os }}-
-
-      - name: Cache Toolchain Output
-        uses: actions/cache@v4
-        with:
-          path: |
-            /mnt/workspace/staging_dir
-            /mnt/workspace/build_dir/host
-          key: toolchain-${{ runner.os }}-${{ hashFiles('openwrt-ci.yml') }}
-          restore-keys: toolchain-${{ runner.os }}-
-
-      - name: Add Custom Plugins
-        run: |
-          cd /mnt/workspace
+          
+      - name: Other plugins
+        run: | 
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           cd package/lean
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
           git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
 
-      - name: Update Feeds
+      - name: Update feeds
         run: |
-          cd /mnt/workspace
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Generate Configuration File
+      - name: Generate configuration file
         run: |
-          cd /mnt/workspace
           rm -f ./.config*
-          touch .config
-          cat >> .config <<EOF
+          touch ./.config
+          cat >> .config <<EOF          
           CONFIG_TARGET_x86=y
           CONFIG_TARGET_x86_64=y
           CONFIG_TARGET_x86_64_DEVICE_generic=y
@@ -83,75 +85,41 @@ jobs:
           # CONFIG_PACKAGE_automount is not set
           # CONFIG_PACKAGE_autosamba is not set
           CONFIG_PACKAGE_bash=y
-          # CONFIG_PACKAGE_bc is not set
           CONFIG_PACKAGE_chinadns-ng=y
           CONFIG_PACKAGE_coreutils-nohup=y
           CONFIG_PACKAGE_ddns-go=y
-          # CONFIG_PACKAGE_ethtool is not set
-          CONFIG_PACKAGE_filebrowser=y
-          CONFIG_PACKAGE_firewall=m
+          # CONFIG_PACKAGE_firewall is not set
           CONFIG_PACKAGE_firewall4=y
           CONFIG_PACKAGE_geoview=y
           CONFIG_PACKAGE_haproxy=y
           CONFIG_PACKAGE_ipt2socks=y
-          CONFIG_PACKAGE_iptables-mod-fullconenat=m
-          CONFIG_PACKAGE_iptables-mod-iprange=y
-          CONFIG_PACKAGE_iptables-mod-socket=y
           CONFIG_PACKAGE_iputils-arping=y
           CONFIG_PACKAGE_ipv6helper=y
           CONFIG_PACKAGE_jansson=y
-          # CONFIG_PACKAGE_kmod-crypto-ccm is not set
-          # CONFIG_PACKAGE_kmod-crypto-cmac is not set
-          # CONFIG_PACKAGE_kmod-crypto-des is not set
-          # CONFIG_PACKAGE_kmod-crypto-md4 is not set
-          # CONFIG_PACKAGE_kmod-crypto-md5 is not set
-          # CONFIG_PACKAGE_kmod-crypto-sha256 is not set
-          # CONFIG_PACKAGE_kmod-fs-exfat is not set
-          # CONFIG_PACKAGE_kmod-fs-ext4 is not set
-          # CONFIG_PACKAGE_kmod-fs-ksmbd is not set
-          # CONFIG_PACKAGE_kmod-fs-ntfs3 is not set
           CONFIG_PACKAGE_kmod-inet-diag=y
-          CONFIG_PACKAGE_kmod-ipt-fullconenat=m
-          CONFIG_PACKAGE_kmod-ipt-iprange=y
-          CONFIG_PACKAGE_kmod-ipt-socket=y
           CONFIG_PACKAGE_kmod-iptunnel=y
           CONFIG_PACKAGE_kmod-iptunnel4=y
-          # CONFIG_PACKAGE_kmod-lib-crc16 is not set
           CONFIG_PACKAGE_kmod-netlink-diag=y
           CONFIG_PACKAGE_kmod-nf-socket=y
           CONFIG_PACKAGE_kmod-nft-core=y
           CONFIG_PACKAGE_kmod-nft-fib=y
+          CONFIG_PACKAGE_kmod-nft-fullcone=y
           CONFIG_PACKAGE_kmod-nft-nat=y
           CONFIG_PACKAGE_kmod-nft-offload=y
           CONFIG_PACKAGE_kmod-nft-socket=y
           CONFIG_PACKAGE_kmod-nft-tproxy=y
-          # CONFIG_PACKAGE_kmod-oid-registry is not set
-          # CONFIG_PACKAGE_kmod-scsi-core is not set
           CONFIG_PACKAGE_kmod-sit=y
-          # CONFIG_PACKAGE_kmod-usb-storage is not set
-          # CONFIG_PACKAGE_kmod-usb-storage-extras is not set
-          # CONFIG_PACKAGE_kmod-usb-storage-uas is not set
-          # CONFIG_PACKAGE_ksmbd-server is not set
           CONFIG_PACKAGE_libatomic=y
-          CONFIG_PACKAGE_libcap=y
-          CONFIG_PACKAGE_libcap-bin=y
-          CONFIG_PACKAGE_libcap-bin-capsh-shell="/bin/sh"
           CONFIG_PACKAGE_libgmp=y
           CONFIG_PACKAGE_libiconv-full=y
-          # CONFIG_PACKAGE_libkmod is not set
           CONFIG_PACKAGE_libltdl=y
           CONFIG_PACKAGE_liblua5.3=y
           CONFIG_PACKAGE_libnftnl=y
-          # CONFIG_PACKAGE_libnl-core is not set
-          # CONFIG_PACKAGE_libnl-genl is not set
-          # CONFIG_PACKAGE_libpci is not set
           CONFIG_PACKAGE_libruby=y
           CONFIG_PACKAGE_libyaml=y
-          # CONFIG_PACKAGE_luci-app-accesscontrol is not set
           CONFIG_PACKAGE_luci-app-argon-config=y
           # CONFIG_PACKAGE_luci-app-ddns is not set
           CONFIG_PACKAGE_luci-app-ddns-go=y
-          CONFIG_PACKAGE_luci-app-filebrowser=y
           CONFIG_PACKAGE_luci-app-filebrowser=y
           # CONFIG_PACKAGE_luci-app-ksmbd is not set
           CONFIG_PACKAGE_luci-app-mosdns=y
@@ -159,45 +127,19 @@ jobs:
           # CONFIG_PACKAGE_luci-app-nlbwmon is not set
           CONFIG_PACKAGE_luci-app-openclash=y
           CONFIG_PACKAGE_luci-app-passwall=y
-          # CONFIG_PACKAGE_luci-app-passwall2 is not set
-          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Haproxy is not set
-          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_ShadowsocksR_Libev_Client is not set
-          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Libev_Client is not set
-          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Simple_Obfs is not set
-          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_SingBox is not set
-          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_V2ray_Plugin is not set
-          # CONFIG_PACKAGE_luci-app-passwall2_Iptables_Transparent_Proxy is not set
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Geoview=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Simple_Obfs=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_SingBox=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Plus=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Plugin=y
-          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y
-          CONFIG_PACKAGE_luci-app-passwall_Iptables_Transparent_Proxy=y
           CONFIG_PACKAGE_luci-app-softethervpn=y
-          # CONFIG_PACKAGE_luci-app-vsftpd is not set
-          # CONFIG_PACKAGE_luci-app-watchcat is not set
           CONFIG_PACKAGE_luci-app-wechatpush=y
-          # CONFIG_PACKAGE_luci-app-wol is not set
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-nikki-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-softethervpn-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-watchcat-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
           CONFIG_PACKAGE_luci-theme-argon=y
           CONFIG_PACKAGE_nftables-json=y
           CONFIG_PACKAGE_nikki=y
-          # CONFIG_PACKAGE_pciids is not set
-          # CONFIG_PACKAGE_pciutils is not set
           CONFIG_PACKAGE_ruby=y
           CONFIG_PACKAGE_ruby-bigdecimal=y
           CONFIG_PACKAGE_ruby-date=y
@@ -207,8 +149,7 @@ jobs:
           CONFIG_PACKAGE_ruby-psych=y
           CONFIG_PACKAGE_ruby-stringio=y
           CONFIG_PACKAGE_ruby-yaml=y
-          CONFIG_PACKAGE_shadowsocks-libev-ss-local=y
-          CONFIG_PACKAGE_shadowsocks-libev-ss-redir=y
+          CONFIG_PACKAGE_shadowsocks-rust-ssserver=y
           CONFIG_PACKAGE_sing-box=y
           CONFIG_PACKAGE_softethervpn5-bridge=y
           CONFIG_PACKAGE_softethervpn5-client=y
@@ -219,8 +160,6 @@ jobs:
           CONFIG_PACKAGE_v2ray-geoip=y
           CONFIG_PACKAGE_v2ray-geosite=y
           CONFIG_PACKAGE_v2ray-plugin=y
-          # CONFIG_PACKAGE_watchcat is not set
-          # CONFIG_PACKAGE_wsdd2 is not set
           CONFIG_PACKAGE_yq=y
           CONFIG_RUBY_ENABLE_YJIT=y
           CONFIG_SING_BOX_WITH_CLASH_API=y
@@ -230,39 +169,84 @@ jobs:
           CONFIG_SING_BOX_WITH_QUIC=y
           CONFIG_SING_BOX_WITH_UTLS=y
           CONFIG_SING_BOX_WITH_WIREGUARD=y
-          CONFIG_TARGET_ROOTFS_PARTSIZE=500
+          CONFIG_TARGET_ROOTFS_PARTSIZE=800
+          # CONFIG_KSMBD_SMB_INSECURE_SERVER is not set
+          CONFIG_PACKAGE_bc=y
+          # CONFIG_PACKAGE_dc is not set
+          CONFIG_PACKAGE_ethtool=y
+          CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
+          CONFIG_PACKAGE_iptables-mod-fullconenat=y
+          CONFIG_PACKAGE_kmod-crypto-ccm=y
+          CONFIG_PACKAGE_kmod-crypto-cmac=y
+          CONFIG_PACKAGE_kmod-crypto-des=y
+          CONFIG_PACKAGE_kmod-crypto-md4=y
+          CONFIG_PACKAGE_kmod-crypto-md5=y
+          CONFIG_PACKAGE_kmod-crypto-sha256=y
+          CONFIG_PACKAGE_kmod-fs-exfat=y
+          CONFIG_PACKAGE_kmod-fs-ext4=y
+          CONFIG_PACKAGE_kmod-fs-ksmbd=y
+          CONFIG_PACKAGE_kmod-fs-ntfs3=y
+          CONFIG_PACKAGE_kmod-ipt-conntrack-extra=y
+          CONFIG_PACKAGE_kmod-ipt-fullconenat=y
+          CONFIG_PACKAGE_kmod-lib-crc16=y
           CONFIG_PACKAGE_kmod-nf-conntrack-netlink=y
+          CONFIG_PACKAGE_kmod-oid-registry=y
+          CONFIG_PACKAGE_kmod-scsi-core=y
+          CONFIG_PACKAGE_kmod-usb-storage=y
+          CONFIG_PACKAGE_kmod-usb-storage-extras=y
+          CONFIG_PACKAGE_kmod-usb-storage-uas=y
+          CONFIG_PACKAGE_ksmbd-server=y
+          CONFIG_PACKAGE_libkmod=y
+          CONFIG_PACKAGE_libnl-core=y
+          CONFIG_PACKAGE_libnl-genl=y
+          CONFIG_PACKAGE_libpci=y
+          CONFIG_PACKAGE_luci-lib-chartjs=y
           CONFIG_PACKAGE_nlbwmon=y
-          CONFIG_PACKAGE_vsftpd-alt=y
-          CONFIG_VSFTPD_USE_UCI_SCRIPTS=y
+          CONFIG_PACKAGE_pciids=y
+          CONFIG_PACKAGE_pciutils=y
+          CONFIG_PACKAGE_wsdd2=y
 
           EOF
-          sed -i 's/^[ \t]*//g' ./.config
+          sed -i 's/^[ \\t]*//g' ./.config
           make defconfig
 
-      - name: Download Sources
-        run: |
-          cd /mnt/workspace
-          make download -j$(nproc)
+      - name: Download packages
+        run: make download -j16
 
-      - name: Compile Firmware
+      - name: Compile firmware
         run: |
-          cd /mnt/workspace
-          make -j$(nproc)
+          make -j$(nproc) || make -j1 V=s
+          echo "======================="
+          echo "Space usage:"
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1 ./ --exclude=build_dir --exclude=bin
+          du -h --max-depth=1 ./build_dir
+          du -h --max-depth=1 ./bin
 
-      - name: Cleanup Temporary Files
+      - name: Prepare artifact
         run: |
-          cd /mnt/workspace
-          rm -rf build_dir tmp staging_dir
+          mkdir -p ./artifact/package
+          mkdir -p ./artifact/buildinfo
+          rm -rf $(find ./bin/targets/ -type d -name "packages")
+          cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
+          cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
-      - name: Prepare Artifact
-        run: |
-          cd /mnt/workspace
-          mkdir -p ./artifact/firmware
-          cp -rf $(find ./bin/targets/ -type f -name "*.img" -o -name "*.gz" -o -name "*.bin") ./artifact/firmware/
+      - name: Upload buildinfo
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenWrt_buildinfo
+          path: ./artifact/buildinfo/
 
-      - name: Upload Artifact
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenWrt_package
+          path: ./artifact/package/
+
+      - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: OpenWrt_firmware
-          path: /mnt/workspace/artifact/firmware/
+          path: ./bin/targets/
