@@ -248,7 +248,7 @@ jobs:
       - name: Compile Firmware
         run: |
           cd /mnt/workspace
-          make -j1 V=sc
+          make -j$(nproc)
 
       - name: Cleanup Temporary Files
         run: |
