@@ -1,4 +1,3 @@
-
 name: OpenWrt-CI
 
 on:
@@ -30,7 +29,9 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential clang flex bison g++ gawk             gettext libncurses5-dev libssl-dev python3-distutils             rsync unzip zlib1g-dev file wget git time
+          sudo apt install -y build-essential clang flex bison g++ gawk \
+            gettext libncurses5-dev libssl-dev python3-distutils \
+            rsync unzip zlib1g-dev file wget git time
 
       - name: Prepare Workspace
         run: |
@@ -158,14 +159,14 @@ jobs:
           # CONFIG_PACKAGE_luci-app-nlbwmon is not set
           CONFIG_PACKAGE_luci-app-openclash=y
           CONFIG_PACKAGE_luci-app-passwall=y
-          CONFIG_PACKAGE_luci-app-passwall2=y
-          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Haproxy=y
-          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_ShadowsocksR_Libev_Client=y
-          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Libev_Client=y
-          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Simple_Obfs=y
-          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_SingBox=y
-          CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_V2ray_Plugin=y
-          CONFIG_PACKAGE_luci-app-passwall2_Iptables_Transparent_Proxy=y
+          # CONFIG_PACKAGE_luci-app-passwall2 is not set
+          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Haproxy is not set
+          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_ShadowsocksR_Libev_Client is not set
+          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Libev_Client is not set
+          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Simple_Obfs is not set
+          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_SingBox is not set
+          # CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_V2ray_Plugin is not set
+          # CONFIG_PACKAGE_luci-app-passwall2_Iptables_Transparent_Proxy is not set
           CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Geoview=y
           CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy=y
           CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client=y
@@ -188,7 +189,7 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-nikki-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn=y
+          # CONFIG_PACKAGE_luci-i18n-passwall2-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-softethervpn-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-watchcat-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
@@ -234,8 +235,9 @@ jobs:
           CONFIG_PACKAGE_nlbwmon=y
           CONFIG_PACKAGE_vsftpd-alt=y
           CONFIG_VSFTPD_USE_UCI_SCRIPTS=y
+
           EOF
-          sed -i 's/^[ 	]*//g' ./.config
+          sed -i 's/^[ \t]*//g' ./.config
           make defconfig
 
       - name: Download Sources
@@ -246,7 +248,7 @@ jobs:
       - name: Compile Firmware
         run: |
           cd /mnt/workspace
-          make -j$(nproc) V=sc
+          make -j1 V=sc
 
       - name: Cleanup Temporary Files
         run: |
