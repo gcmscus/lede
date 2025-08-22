@@ -149,7 +149,7 @@ jobs:
           CONFIG_PACKAGE_ruby-stringio=y
           CONFIG_PACKAGE_ruby-yaml=y
           CONFIG_PACKAGE_shadowsocks-rust-ssserver=y
-          # CONFIG_PACKAGE_sing-box=y
+          CONFIG_PACKAGE_sing-box=y
           CONFIG_PACKAGE_softethervpn5-bridge=y
           CONFIG_PACKAGE_softethervpn5-client=y
           CONFIG_PACKAGE_softethervpn5-libs=y
@@ -161,13 +161,13 @@ jobs:
           CONFIG_PACKAGE_v2ray-plugin=y
           CONFIG_PACKAGE_yq=y
           CONFIG_RUBY_ENABLE_YJIT=y
-          # CONFIG_SING_BOX_WITH_CLASH_API=y
-          # CONFIG_SING_BOX_WITH_DHCP=y
-          # CONFIG_SING_BOX_WITH_ECH=y
-          # CONFIG_SING_BOX_WITH_GVISOR=y
-          # CONFIG_SING_BOX_WITH_QUIC=y
-          # CONFIG_SING_BOX_WITH_UTLS=y
-          # CONFIG_SING_BOX_WITH_WIREGUARD=y
+          CONFIG_SING_BOX_WITH_CLASH_API=y
+          CONFIG_SING_BOX_WITH_DHCP=y
+          CONFIG_SING_BOX_WITH_ECH=y
+          CONFIG_SING_BOX_WITH_GVISOR=y
+          CONFIG_SING_BOX_WITH_QUIC=y
+          CONFIG_SING_BOX_WITH_UTLS=y
+          CONFIG_SING_BOX_WITH_WIREGUARD=y
           CONFIG_TARGET_ROOTFS_PARTSIZE=800
           # CONFIG_KSMBD_SMB_INSECURE_SERVER is not set
           CONFIG_PACKAGE_bc=y
