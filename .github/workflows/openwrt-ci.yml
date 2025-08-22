@@ -24,6 +24,7 @@ jobs:
     name: Build OpenWrt Firmware
 
     runs-on: ubuntu-22.04
+
     steps:
       - name: Space cleanup and Initialization environment
         env:
@@ -57,7 +58,7 @@ jobs:
           haskell: true
           large-packages: true
           swap-storage: true
-          
+
       - name: Other plugins
         run: | 
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
@@ -68,6 +69,7 @@ jobs:
 
       - name: Update feeds
         run: |
+          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
@@ -208,6 +210,7 @@ jobs:
           EOF
           sed -i 's/^[ \\t]*//g' ./.config
           make defconfig
+
 
       - name: Download packages
         run: make download -j16
