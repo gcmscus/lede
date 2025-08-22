@@ -23,7 +23,7 @@ jobs:
 
     name: Build OpenWrt Firmware
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Space cleanup and Initialization environment
@@ -69,8 +69,10 @@ jobs:
 
       - name: Update feeds
         run: |
+          rm -rf feeds/*/sing-box
+          rm -rf package/sing-box
           ./scripts/feeds update -a
-          ./scripts/feeds install -a -p packages sing-box
+          ./scripts/feeds install -a
 
       - name: Generate configuration file
         run: |
