@@ -70,7 +70,7 @@ jobs:
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
-          ./scripts/feeds install -a
+          ./scripts/feeds install -a -p packages sing-box
 
       - name: Generate configuration file
         run: |
