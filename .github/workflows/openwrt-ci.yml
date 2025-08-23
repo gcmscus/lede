@@ -85,21 +85,34 @@ jobs:
           # CONFIG_PACKAGE_automount is not set
           # CONFIG_PACKAGE_autosamba is not set
           CONFIG_PACKAGE_bash=y
-          CONFIG_PACKAGE_chinadns-ng=y
-          CONFIG_PACKAGE_coreutils-nohup=y
+          # CONFIG_PACKAGE_bc is not set
           CONFIG_PACKAGE_ddns-go=y
-          # CONFIG_PACKAGE_firewall is not set
+          # CONFIG_PACKAGE_etherwake is not set
+          # CONFIG_PACKAGE_ethtool is not set
+          CONFIG_PACKAGE_firewall=m
           CONFIG_PACKAGE_firewall4=y
-          CONFIG_PACKAGE_geoview=y
-          CONFIG_PACKAGE_haproxy=y
-          CONFIG_PACKAGE_ipt2socks=y
+          CONFIG_PACKAGE_iptables-mod-conntrack-extra=m
+          CONFIG_PACKAGE_iptables-mod-fullconenat=m
           CONFIG_PACKAGE_iputils-arping=y
           CONFIG_PACKAGE_ipv6helper=y
           CONFIG_PACKAGE_jansson=y
+          # CONFIG_PACKAGE_kmod-crypto-ccm is not set
+          # CONFIG_PACKAGE_kmod-crypto-cmac is not set
+          # CONFIG_PACKAGE_kmod-crypto-des is not set
+          # CONFIG_PACKAGE_kmod-crypto-md4 is not set
+          # CONFIG_PACKAGE_kmod-crypto-md5 is not set
+          # CONFIG_PACKAGE_kmod-crypto-sha256 is not set
+          # CONFIG_PACKAGE_kmod-fs-exfat is not set
+          # CONFIG_PACKAGE_kmod-fs-ext4 is not set
+          # CONFIG_PACKAGE_kmod-fs-ksmbd is not set
+          # CONFIG_PACKAGE_kmod-fs-ntfs3 is not set
           CONFIG_PACKAGE_kmod-inet-diag=y
+          CONFIG_PACKAGE_kmod-ipt-conntrack-extra=m
+          CONFIG_PACKAGE_kmod-ipt-fullconenat=m
           CONFIG_PACKAGE_kmod-iptunnel=y
           CONFIG_PACKAGE_kmod-iptunnel4=y
-          CONFIG_PACKAGE_kmod-netlink-diag=y
+          # CONFIG_PACKAGE_kmod-lib-crc16 is not set
+          # CONFIG_PACKAGE_kmod-nf-conntrack-netlink is not set
           CONFIG_PACKAGE_kmod-nf-socket=y
           CONFIG_PACKAGE_kmod-nft-core=y
           CONFIG_PACKAGE_kmod-nft-fib=y
@@ -108,13 +121,20 @@ jobs:
           CONFIG_PACKAGE_kmod-nft-offload=y
           CONFIG_PACKAGE_kmod-nft-socket=y
           CONFIG_PACKAGE_kmod-nft-tproxy=y
+          # CONFIG_PACKAGE_kmod-oid-registry is not set
+          # CONFIG_PACKAGE_kmod-scsi-core is not set
           CONFIG_PACKAGE_kmod-sit=y
-          CONFIG_PACKAGE_libatomic=y
+          # CONFIG_PACKAGE_kmod-usb-storage is not set
+          # CONFIG_PACKAGE_kmod-usb-storage-extras is not set
+          # CONFIG_PACKAGE_kmod-usb-storage-uas is not set
+          # CONFIG_PACKAGE_ksmbd-server is not set
           CONFIG_PACKAGE_libgmp=y
           CONFIG_PACKAGE_libiconv-full=y
-          CONFIG_PACKAGE_libltdl=y
-          CONFIG_PACKAGE_liblua5.3=y
+          # CONFIG_PACKAGE_libkmod is not set
           CONFIG_PACKAGE_libnftnl=y
+          # CONFIG_PACKAGE_libnl-core is not set
+          # CONFIG_PACKAGE_libnl-genl is not set
+          # CONFIG_PACKAGE_libpci is not set
           CONFIG_PACKAGE_libruby=y
           CONFIG_PACKAGE_libyaml=y
           CONFIG_PACKAGE_luci-app-argon-config=y
@@ -126,20 +146,24 @@ jobs:
           CONFIG_PACKAGE_luci-app-nikki=y
           # CONFIG_PACKAGE_luci-app-nlbwmon is not set
           CONFIG_PACKAGE_luci-app-openclash=y
-          CONFIG_PACKAGE_luci-app-passwall=y
           CONFIG_PACKAGE_luci-app-softethervpn=y
+          # CONFIG_PACKAGE_luci-app-vsftpd is not set
           CONFIG_PACKAGE_luci-app-wechatpush=y
+          # CONFIG_PACKAGE_luci-app-wol is not set
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-nikki-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-softethervpn-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
+          # CONFIG_PACKAGE_luci-lib-chartjs is not set
           CONFIG_PACKAGE_luci-theme-argon=y
           CONFIG_PACKAGE_nftables-json=y
           CONFIG_PACKAGE_nikki=y
+          # CONFIG_PACKAGE_nlbwmon is not set
+          # CONFIG_PACKAGE_pciids is not set
+          # CONFIG_PACKAGE_pciutils is not set
           CONFIG_PACKAGE_ruby=y
           CONFIG_PACKAGE_ruby-bigdecimal=y
           CONFIG_PACKAGE_ruby-date=y
@@ -149,8 +173,6 @@ jobs:
           CONFIG_PACKAGE_ruby-psych=y
           CONFIG_PACKAGE_ruby-stringio=y
           CONFIG_PACKAGE_ruby-yaml=y
-          CONFIG_PACKAGE_shadowsocks-rust-ssserver=y
-          CONFIG_PACKAGE_sing-box=y
           CONFIG_PACKAGE_softethervpn5-bridge=y
           CONFIG_PACKAGE_softethervpn5-client=y
           CONFIG_PACKAGE_softethervpn5-libs=y
@@ -159,52 +181,11 @@ jobs:
           CONFIG_PACKAGE_v2dat=y
           CONFIG_PACKAGE_v2ray-geoip=y
           CONFIG_PACKAGE_v2ray-geosite=y
-          CONFIG_PACKAGE_v2ray-plugin=y
+          # CONFIG_PACKAGE_vsftpd is not set
+          # CONFIG_PACKAGE_wsdd2 is not set
           CONFIG_PACKAGE_yq=y
           CONFIG_RUBY_ENABLE_YJIT=y
-          CONFIG_SING_BOX_WITH_CLASH_API=y
-          CONFIG_SING_BOX_WITH_DHCP=y
-          CONFIG_SING_BOX_WITH_ECH=y
-          CONFIG_SING_BOX_WITH_GVISOR=y
-          CONFIG_SING_BOX_WITH_QUIC=y
-          CONFIG_SING_BOX_WITH_UTLS=y
-          CONFIG_SING_BOX_WITH_WIREGUARD=y
           CONFIG_TARGET_ROOTFS_PARTSIZE=800
-          # CONFIG_KSMBD_SMB_INSECURE_SERVER is not set
-          CONFIG_PACKAGE_bc=y
-          # CONFIG_PACKAGE_dc is not set
-          CONFIG_PACKAGE_ethtool=y
-          CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
-          CONFIG_PACKAGE_iptables-mod-fullconenat=y
-          CONFIG_PACKAGE_kmod-crypto-ccm=y
-          CONFIG_PACKAGE_kmod-crypto-cmac=y
-          CONFIG_PACKAGE_kmod-crypto-des=y
-          CONFIG_PACKAGE_kmod-crypto-md4=y
-          CONFIG_PACKAGE_kmod-crypto-md5=y
-          CONFIG_PACKAGE_kmod-crypto-sha256=y
-          CONFIG_PACKAGE_kmod-fs-exfat=y
-          CONFIG_PACKAGE_kmod-fs-ext4=y
-          CONFIG_PACKAGE_kmod-fs-ksmbd=y
-          CONFIG_PACKAGE_kmod-fs-ntfs3=y
-          CONFIG_PACKAGE_kmod-ipt-conntrack-extra=y
-          CONFIG_PACKAGE_kmod-ipt-fullconenat=y
-          CONFIG_PACKAGE_kmod-lib-crc16=y
-          CONFIG_PACKAGE_kmod-nf-conntrack-netlink=y
-          CONFIG_PACKAGE_kmod-oid-registry=y
-          CONFIG_PACKAGE_kmod-scsi-core=y
-          CONFIG_PACKAGE_kmod-usb-storage=y
-          CONFIG_PACKAGE_kmod-usb-storage-extras=y
-          CONFIG_PACKAGE_kmod-usb-storage-uas=y
-          CONFIG_PACKAGE_ksmbd-server=y
-          CONFIG_PACKAGE_libkmod=y
-          CONFIG_PACKAGE_libnl-core=y
-          CONFIG_PACKAGE_libnl-genl=y
-          CONFIG_PACKAGE_libpci=y
-          CONFIG_PACKAGE_luci-lib-chartjs=y
-          CONFIG_PACKAGE_nlbwmon=y
-          CONFIG_PACKAGE_pciids=y
-          CONFIG_PACKAGE_pciutils=y
-          CONFIG_PACKAGE_wsdd2=y
 
           EOF
           sed -i 's/^[ \\t]*//g' ./.config
