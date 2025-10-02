@@ -243,8 +243,7 @@ jobs:
       - name: Cleanup Temporary Files
         run: |
           cd /mnt/workspace
-          rm -rf build_dir tmp staging_dir
-
+          rm -rf build_dir tmp
       - name: Prepare Artifact
         run: |
           cd /mnt/workspace
