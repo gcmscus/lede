@@ -63,13 +63,12 @@ jobs:
       - name: Add Custom Plugins
         run: |
           cd package
-          git clone https://github.com/jerrykuku/luci-app-argon-config.git
+          # git clone https://github.com/jerrykuku/luci-app-argon-config.git
           # git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
-          git clone https://github.com/tty228/luci-app-wechatpush.git
+          # git clone https://github.com/tty228/luci-app-wechatpush.git
 
       - name: Update feeds
         run: |
-          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
