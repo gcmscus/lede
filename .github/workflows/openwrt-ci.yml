@@ -12,7 +12,7 @@ on:
 jobs:
   build_openwrt:
     name: Build OpenWrt Firmware
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Source
@@ -52,6 +52,13 @@ jobs:
             /mnt/workspace/build_dir/host
           key: toolchain-${{ runner.os }}-${{ hashFiles('openwrt-ci.yml') }}
           restore-keys: toolchain-${{ runner.os }}-
+
+      - name: Increase swap
+        run: |
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
 
       - name: Add Custom Plugins
         run: |
