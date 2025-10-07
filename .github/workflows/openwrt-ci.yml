@@ -67,10 +67,6 @@ jobs:
           git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
 
-      - name: Set mirror for downloads
-        run: |
-          sed -i 's|https://downloads.openwrt.org|https://mirror.sjtu.edu.cn/openwrt|g' include/download.mk
-    
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
