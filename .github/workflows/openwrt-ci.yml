@@ -188,36 +188,6 @@ jobs:
       - name: Download packages
         run: make download -j16
 
-      - name: Clean toolchain and redownload GCC tarball
-        run: |
-          echo ">>> Cleaning toolchain and old GCC tarball..."
-          rm -rf build_dir/toolchain-* staging_dir/toolchain-*
-          rm -f dl/gcc-13.*.tar.* 
-
-          echo ">>> Redownloading GCC tarball..."
-          make download V=s
-
-      - name: Clean toolchain and check GCC source
-        run: |
-          echo ">>> Cleaning toolchain build and staging dirs to avoid corrupted gcc source..."
-          rm -rf build_dir/toolchain-* staging_dir/toolchain-*
-          make download V=s
-          GCC_TARBALL=$(ls dl/gcc-13.*.tar.* | head -n 1 || true)
-          if [ -n "$GCC_TARBALL" ]; then
-            echo ">>> Found GCC tarball: $GCC_TARBALL"
-            mkdir -p tmp_gcc && tar -xf "$GCC_TARBALL" -C tmp_gcc
-            if ! find tmp_gcc -type f -path "*/gcc/version.c" | grep -q version.c; then
-              echo "❌ version.c not found in GCC tarball. The file may be corrupted."
-              exit 1
-            else
-              echo "✅ version.c found, GCC tarball is OK."
-            fi
-            rm -rf tmp_gcc
-          else
-            echo "❌ GCC tarball not found in dl/. Download step failed."
-            exit 1
-          fi
-
       - name: Compile firmware
         run: |
           make -j$(nproc) || make -j1 V=s
