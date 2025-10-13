@@ -185,17 +185,11 @@ jobs:
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
 
-      - name: Clean GCC cache (only needed once when switching version)
+      - name: Force GCC 13.3.0
         run: |
-          rm -rf build_dir/toolchain-* || true
-          rm -rf staging_dir/toolchain-* || true
-          rm -rf dl/gcc-* || true
+          sed -i 's/CONFIG_GCC_USE_VERSION_12=y/# CONFIG_GCC_USE_VERSION_12 is not set/' .config
+          echo "CONFIG_GCC_USE_VERSION_13=y" >> .config
 
-      - name: Force GCC 12.x
-        run: |
-          sed -i 's/CONFIG_GCC_USE_VERSION_13=y/# CONFIG_GCC_USE_VERSION_13 is not set/' .config || true
-          sed -i 's/# CONFIG_GCC_USE_VERSION_12 is not set/CONFIG_GCC_USE_VERSION_12=y/' .config || true
-          echo "CONFIG_GCC_USE_VERSION_12=y" >> .config
 
       - name: Download packages
         run: make download -j16
