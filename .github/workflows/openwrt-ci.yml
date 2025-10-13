@@ -43,9 +43,9 @@ jobs:
           sudo -E apt clean
           sudo -E timedatectl set-timezone "Asia/Shanghai"
           
-      - name: Add Swap to prevent OOM
+      - name: Add Swap File
         run: |
-          sudo fallocate -l 6G /swapfile
+          sudo fallocate -l 1G /swapfile
           sudo chmod 600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
