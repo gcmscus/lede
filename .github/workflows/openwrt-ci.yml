@@ -184,7 +184,13 @@ jobs:
           EOF
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
-          
+
+      - name: Clean GCC cache (only needed once when switching version)
+        run: |
+          rm -rf build_dir/toolchain-* || true
+          rm -rf staging_dir/toolchain-* || true
+          rm -rf dl/gcc-* || true
+
       - name: Force GCC 12.x
         run: |
           sed -i 's/CONFIG_GCC_USE_VERSION_13=y/# CONFIG_GCC_USE_VERSION_13 is not set/' .config || true
