@@ -9,7 +9,7 @@ name: OpenWrt-CI
 
 on:
   schedule:
-    - cron: 52 22 * * *
+    - cron: 53 21 * * *
 
 permissions:
   contents: read
