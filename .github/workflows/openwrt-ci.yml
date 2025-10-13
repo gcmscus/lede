@@ -185,10 +185,13 @@ jobs:
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
 
-      - name: Force GCC 13.3.0
+      - name: Sync GCC 13.3.0 Patches from OpenWrt Official
         run: |
-          sed -i 's/CONFIG_GCC_USE_VERSION_12=y/# CONFIG_GCC_USE_VERSION_12 is not set/' .config
-          echo "CONFIG_GCC_USE_VERSION_13=y" >> .config
+          git clone -b openwrt-23.05 https://github.com/openwrt/openwrt.git openwrt_patch
+          rm -rf toolchain/gcc/patches-13.x
+          cp -r openwrt_patch/toolchain/gcc/patches-13.x toolchain/gcc/
+          cp openwrt_patch/toolchain/gcc/initial/Makefile toolchain/gcc/initial/Makefile
+          rm -rf openwrt_patch
 
 
       - name: Download packages
