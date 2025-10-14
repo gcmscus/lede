@@ -184,6 +184,11 @@ jobs:
           EOF
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
+          
+      - name: Create version.c to fix GCC build
+        run: |
+          mkdir -p /home/runner/work/lede/lede/build_dir/toolchain-x86_64_gcc-13.3.0_musl/gcc-13.3.0/gcc
+          echo 'const char *version_string = "13.3.0";' > /home/runner/work/lede/lede/build_dir/toolchain-x86_64_gcc-13.3.0_musl/gcc-13.3.0/gcc/version.c
 
       - name: Download packages
         run: make download -j16
