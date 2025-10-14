@@ -185,15 +185,6 @@ jobs:
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
 
-      - name: Sync GCC 13.3.0 Patches from OpenWrt Official
-        run: |
-          git clone -b openwrt-23.05 https://github.com/openwrt/openwrt.git openwrt_patch
-          rm -rf toolchain/gcc/patches-13.x
-          cp -r openwrt_patch/toolchain/gcc/patches-13.x toolchain/gcc/
-          cp openwrt_patch/toolchain/gcc/initial/Makefile toolchain/gcc/initial/Makefile
-          rm -rf openwrt_patch
-
-
       - name: Download packages
         run: make download -j16
 
