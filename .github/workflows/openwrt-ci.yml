@@ -216,13 +216,6 @@ jobs:
           CONFIG_PACKAGE_shadowsocks-rust-sslocal=y
           CONFIG_PACKAGE_shadowsocksr-libev-ssr-check=y
           CONFIG_PACKAGE_shadowsocksr-libev-ssr-server=y
-
-          # CONFIG_PACKAGE_luci-ssl is not set
-          CONFIG_PACKAGE_nginx=y
-          CONFIG_PACKAGE_luci-ssl-nginx=y
-          # CONFIG_PACKAGE_uhttpd is not set
-          # CONFIG_PACKAGE_uhttpd-mod-ubus is not set
-          
           EOF
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
