@@ -60,7 +60,6 @@ jobs:
         run: |
           cd package
           git clone https://github.com/jerrykuku/luci-app-argon-config.git
-          # git clone https://github.com/nikkinikki-org/OpenWrt-nikki.git
           git clone https://github.com/tty228/luci-app-wechatpush.git
 
       - name: Update feeds
@@ -168,13 +167,11 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-nikki-zh-cn is not set
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-softethervpn-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
           CONFIG_PACKAGE_luci-theme-argon=y
           CONFIG_PACKAGE_nftables-json=y
-          # CONFIG_PACKAGE_nikki is not set
           # CONFIG_PACKAGE_nlbwmon is not set
           CONFIG_PACKAGE_ruby=y
           CONFIG_PACKAGE_ruby-bigdecimal=y
@@ -217,11 +214,6 @@ jobs:
           EOF
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
-          
-      # - name: Create version.c to fix GCC build
-      #  run: |
-      #    mkdir -p /home/runner/work/lede/lede/build_dir/toolchain-x86_64_gcc-13.3.0_musl/gcc-13.3.0/gcc
-      #    echo 'const char *version_string = "13.3.0";' > /home/runner/work/lede/lede/build_dir/toolchain-x86_64_gcc-13.3.0_musl/gcc-13.3.0/gcc/version.c
 
       - name: Download packages
         run: make download -j16
