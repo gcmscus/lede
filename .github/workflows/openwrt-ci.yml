@@ -77,6 +77,7 @@ jobs:
           CONFIG_TARGET_x86=y
           CONFIG_TARGET_x86_64=y
           CONFIG_TARGET_x86_64_DEVICE_generic=y
+          CONFIG_LIBSODIUM_MINIMAL=y
           CONFIG_OPENVPN_openssl_ENABLE_DEF_AUTH=y
           CONFIG_OPENVPN_openssl_ENABLE_FRAGMENT=y
           CONFIG_OPENVPN_openssl_ENABLE_LZ4=y
@@ -140,6 +141,7 @@ jobs:
           # CONFIG_PACKAGE_ksmbd-server is not set
           CONFIG_PACKAGE_libatomic=y
           CONFIG_PACKAGE_libgmp=y
+          CONFIG_PACKAGE_libiconv-full=y
           CONFIG_PACKAGE_libltdl=y
           CONFIG_PACKAGE_liblua5.3=y
           CONFIG_PACKAGE_liblzo=y
@@ -147,6 +149,7 @@ jobs:
           # CONFIG_PACKAGE_libnl-core is not set
           # CONFIG_PACKAGE_libnl-genl is not set
           CONFIG_PACKAGE_libruby=y
+          CONFIG_PACKAGE_libsodium=y
           CONFIG_PACKAGE_libuci-lua=y
           CONFIG_PACKAGE_libyaml=y
           CONFIG_PACKAGE_luci-app-argon-CONFIG=y
@@ -157,11 +160,13 @@ jobs:
           CONFIG_PACKAGE_luci-app-openclash=y
           CONFIG_PACKAGE_luci-app-openvpn-server=y
           CONFIG_PACKAGE_luci-app-passwall=y
+          CONFIG_PACKAGE_luci-app-softethervpn=y
           CONFIG_PACKAGE_luci-app-wechatpush=y
           CONFIG_PACKAGE_luci-i18n-argon-CONFIG-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-filebrowser-go-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-openvpn-server-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
+          CONFIG_PACKAGE_luci-i18n-softethervpn-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=y
           # CONFIG_PACKAGE_luci-lib-chartjs is not set
           CONFIG_PACKAGE_luci-theme-argon=y
@@ -181,6 +186,10 @@ jobs:
           CONFIG_PACKAGE_ruby-stringio=y
           CONFIG_PACKAGE_ruby-yaml=y
           CONFIG_PACKAGE_sing-box=y
+          CONFIG_PACKAGE_softethervpn5-bridge=y
+          CONFIG_PACKAGE_softethervpn5-client=y
+          CONFIG_PACKAGE_softethervpn5-libs=y
+          CONFIG_PACKAGE_softethervpn5-server=y
           CONFIG_PACKAGE_tcping=y
           CONFIG_PACKAGE_unzip=y
           # CONFIG_PACKAGE_wsdd2 is not set
