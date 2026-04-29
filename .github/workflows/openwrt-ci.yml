@@ -191,7 +191,7 @@ jobs:
           CONFIG_SING_BOX_BUILD_TAILSCALE=y
           CONFIG_SING_BOX_BUILD_UTLS=y
           CONFIG_SING_BOX_BUILD_WIREGUARD=y
-          CONFIG_TARGET_ROOTFS_PARTSIZE=300
+          CONFIG_TARGET_ROOTFS_PARTSIZE=480
           EOF
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
