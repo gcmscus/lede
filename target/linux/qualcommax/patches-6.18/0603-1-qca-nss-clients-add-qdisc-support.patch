@@ -42,7 +42,7 @@
  	dev->needs_free_netdev = true;
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -5054,6 +5054,15 @@
+@@ -5081,6 +5081,15 @@
  void dev_uc_init(struct net_device *dev);
  
  /**
@@ -58,7 +58,7 @@
   *  __dev_uc_sync - Synchronize device's unicast list
   *  @dev:  device to sync
   *  @sync: function to call if address should be added
-@@ -5621,6 +5630,11 @@
+@@ -5648,6 +5657,11 @@
  	return dev->priv_flags & IFF_FAILOVER_SLAVE;
  }
  
@@ -360,7 +360,7 @@
  subsys_initcall(pktsched_init);
 --- a/net/sched/sch_generic.c
 +++ b/net/sched/sch_generic.c
-@@ -1110,6 +1110,7 @@
+@@ -1149,6 +1149,7 @@
  
  	qdisc_free_rcu(qdisc);
  }

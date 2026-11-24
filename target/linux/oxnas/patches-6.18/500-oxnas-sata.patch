@@ -1,6 +1,6 @@
 --- a/drivers/ata/Kconfig
 +++ b/drivers/ata/Kconfig
-@@ -585,6 +585,14 @@
+@@ -577,6 +577,14 @@
  
  	  If unsure, say N.
  
